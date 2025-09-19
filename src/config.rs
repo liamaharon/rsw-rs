@@ -71,6 +71,9 @@ pub struct WatchOptions {
     /// which helps when investigating performance issues in a profiler.
     #[serde(default = "default_dev")]
     pub profile: Option<String>,
+    /// Cargo features to activate for this crate in "watch" mode.
+    #[serde(default)]
+    pub features: Option<Vec<String>>,
 }
 
 /// `rsw build` - build config
@@ -89,6 +92,9 @@ pub struct BuildOptions {
     /// which helps when investigating performance issues in a profiler.
     #[serde(default = "default_release")]
     pub profile: Option<String>,
+    /// Cargo features to activate for this crate in "build" mode.
+    #[serde(default)]
+    pub features: Option<Vec<String>>,
 }
 
 /// `rsw new` - new config
@@ -203,6 +209,7 @@ fn default_watch() -> Option<WatchOptions> {
     Some(WatchOptions {
         run: default_true(),
         profile: default_dev(),
+        features: Some(vec![]),
     })
 }
 
@@ -210,5 +217,6 @@ fn default_build() -> Option<BuildOptions> {
     Some(BuildOptions {
         run: default_true(),
         profile: default_release(),
+        features: Some(vec![]),
     })
 }

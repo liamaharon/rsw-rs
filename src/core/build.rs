@@ -48,11 +48,17 @@ impl Build {
 
         // profile
         let mut profile = config.build.as_ref().unwrap().profile.as_ref().unwrap();
+        let mut features = config.build.as_ref().unwrap().features.as_ref().unwrap();
         if rsw_type == "watch" {
             profile = config.watch.as_ref().unwrap().profile.as_ref().unwrap();
+            features = config.watch.as_ref().unwrap().features.as_ref().unwrap();
         }
         let arg_profile = format!("--{}", profile);
+        let arg_features = format!("--features={}", features.join(","));
         args.push(&arg_profile);
+        if !features.is_empty() {
+            args.push(&arg_features);
+        }
 
         // scope
         let (_, scope2) = get_pkg(&self.config.name);
